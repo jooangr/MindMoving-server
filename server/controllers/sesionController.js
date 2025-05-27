@@ -1,6 +1,8 @@
 // server/controllers/sesionController.js
 const SesionEEG = require('../models/SesionEEG');
 
+
+
 const guardarSesion = async (req, res) => {
   try {
     const sesion = new SesionEEG(req.body);
