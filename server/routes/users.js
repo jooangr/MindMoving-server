@@ -30,7 +30,9 @@ router.get('/users/:id', async (req, res) => {
       const user = await User.findById(id).select('-password'); // opcional: excluye contraseña
       if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
   
-      res.json(user);
+     res.json(user);
+     console.log("📤 Usuario enviado al frontend:", user);
+
     } catch (err) {
       res.status(500).json({ message: 'Error al obtener datos del usuario' });
     }

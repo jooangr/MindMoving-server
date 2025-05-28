@@ -48,7 +48,6 @@ const user = await User.findOne({
   }
 };
 
-
 const actualizarUsuario = async (req, res) => {
   const { id } = req.params;
   const { username, email, password } = req.body;
@@ -59,6 +58,22 @@ const actualizarUsuario = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
+    // ✅ Verificar si el nuevo username o email ya están en uso por otro usuario
+    if (username && username !== user.username) {
+      const existingUsername = await User.findOne({ username });
+      if (existingUsername && existingUsername._id.toString() !== id) {
+        return res.status(409).json({ message: 'Username ya está en uso' });
+      }
+    }
+
+    if (email && email !== user.email) {
+      const existingEmail = await User.findOne({ email });
+      if (existingEmail && existingEmail._id.toString() !== id) {
+        return res.status(409).json({ message: 'Email ya está en uso' });
+      }
+    }
+
+    // ✅ Actualizar los datos
     if (username) user.username = username;
     if (email) user.email = email;
     if (password) {
@@ -68,10 +83,14 @@ const actualizarUsuario = async (req, res) => {
     }
 
     await user.save();
+    console.log("✅ Usuario actualizado:", user); 
+    res.status(200).json({ message: 'Usuario actualizado correctamente' });
+
     res.status(200).json({ message: 'Usuario actualizado correctamente' });
   } catch (err) {
     res.status(500).json({ message: 'Error al actualizar usuario', error: err.message });
   }
 };
+
 
 module.exports = { register, login, actualizarUsuario };
