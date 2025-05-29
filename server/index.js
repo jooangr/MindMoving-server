@@ -22,6 +22,8 @@ app.use('/api', sesionRoutes);
 app.use('/api/perfil', perfilRoutes);
 
 
+
+
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
