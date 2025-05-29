@@ -37,6 +37,23 @@ router.get('/users/:id', async (req, res) => {
       res.status(500).json({ message: 'Error al obtener datos del usuario' });
     }
   });
+
+  // En routes/users.js
+router.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log("🧨 Intentando eliminar usuario con ID:", id);
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+    res.json({ message: 'Usuario eliminado correctamente' });
+  } catch (err) {
+    console.error("❌ Error al eliminar:", err.message);
+    res.status(500).json({ message: 'Error al eliminar usuario' });
+  }
+});
+
+
   
 
 module.exports = router;
