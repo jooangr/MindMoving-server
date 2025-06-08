@@ -6,6 +6,8 @@ const User = require('../models/User'); // Asegúrate de tener este modelo corre
 
 //  Guardar sesión EEG con validación
 const guardarSesion = async (req, res) => {
+
+  console.log("Guardando la sesión ...")
   try {
     const {
       usuarioId,
@@ -50,6 +52,7 @@ const guardarSesion = async (req, res) => {
     await sesion.save();
 
     res.status(201).json({ message: 'Sesión guardada correctamente' });
+    console.log("Sesióm guardada correctamente :)")
 
   } catch (err) {
     console.error('❌ Error al guardar sesión:', err);
