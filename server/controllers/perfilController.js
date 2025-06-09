@@ -46,19 +46,16 @@ const saveOrUpdatePerfil = async (req, res) => {
   }
 };
 
-//Crear el perfil de calirbacion
-const PerfilCalibracion = require('../models/PerfilCalibracion');
-
-exports.crearPerfil = async (req, res) => {
-    try {
-        const nuevoPerfil = new PerfilCalibracion(req.body);
-        await nuevoPerfil.save();
-        res.status(201).json({ message: "Perfil de calibración creado correctamente." });
-    } catch (error) {
-        console.error("Error al crear perfil:", error);
-        res.status(500).json({ error: "Error al crear perfil de calibración." });
-    }
+const crearPerfil = async (req, res) => {
+  try {
+    const nuevoPerfil = new PerfilCalibracion(req.body);
+    await nuevoPerfil.save();
+    res.status(201).json({ message: "Perfil de calibración creado correctamente." });
+  } catch (error) {
+    console.error("Error al crear perfil:", error);
+    res.status(500).json({ error: "Error al crear perfil de calibración." });
+  }
 };
 
-
-module.exports = { getPerfil, saveOrUpdatePerfil };
+// ✅ Exporta todos correctamente
+module.exports = { getPerfil, saveOrUpdatePerfil, crearPerfil };
