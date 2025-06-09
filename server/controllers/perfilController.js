@@ -47,10 +47,13 @@ const saveOrUpdatePerfil = async (req, res) => {
 };
 
 const crearPerfil = async (req, res) => {
+
+  console.log("Creando perfil de calirabcion")
   try {
     const nuevoPerfil = new PerfilCalibracion(req.body);
     await nuevoPerfil.save();
     res.status(201).json({ message: "Perfil de calibración creado correctamente." });
+    console.log("Perfil creado correctamente y guardado")
   } catch (error) {
     console.error("Error al crear perfil:", error);
     res.status(500).json({ error: "Error al crear perfil de calibración." });
