@@ -21,6 +21,10 @@ app.use('/api', userRoutes);
 app.use('/api', sesionRoutes);
 app.use('/api/perfil', perfilRoutes);
 
+const themeRoutes = require('./routes/theme');
+app.use('/users', themeRoutes);
+
+
 // Solo una llamada a listen
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
