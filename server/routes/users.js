@@ -4,6 +4,12 @@ const { actualizarUsuario } = require('../controllers/userController');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
+const SesionEEG = require('../models/SesionEEG');
+const PerfilCalibracion = require('../models/PerfilCalibracion');
+const Attention = require('../models/Attention');
+
+
+
 // Ruta PATCH para actualizar usuario
 router.patch('/update-user/:id', actualizarUsuario);
 
