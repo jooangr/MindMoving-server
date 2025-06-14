@@ -30,27 +30,39 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { identifier, password } = req.body;
-const user = await User.findOne({
-  $or: [{ email: identifier }, { username: identifier }]
-});
 
-
+    const user = await User.findOne({
+      $or: [{ email: identifier }, { username: identifier }]
+    });
 
     if (!user) return res.status(404).json({ message: 'No existe' });
 
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
-    // ✅ Aquí es donde el frontend espera recibir userId
-    res.json({ message: 'Login correcto', userId: user._id });
+    // ⚠️ Si no es válido, intentamos con texto plano
+    if (!valid) {
+      if (user.password === password) {
+        // Re-hashear la contraseña antigua no segura
+        const hashed = await bcrypt.hash(password, 10);
+        user.password = hashed;
+        await user.save();
+
+        console.log('🔐 Contraseña antigua corregida y hasheada');
+        return res.json({ message: 'Login correcto (actualizado)', userId: user._id });
+      }
+
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+
     console.log("🔐 Login recibido:", req.body);
-
+    res.json({ message: 'Login correcto', userId: user._id });
 
   } catch (err) {
     console.error('❌ Error al hacer login:', err.message);
     res.status(500).json({ message: 'Error en el login' });
   }
 };
+
 
 const actualizarUsuario = async (req, res) => {
   const { id } = req.params;
