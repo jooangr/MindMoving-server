@@ -28,6 +28,9 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+
+  console.log("🛠 Intento de login:", req.body);
+
   try {
     const { identifier, password } = req.body;
 
