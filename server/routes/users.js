@@ -42,7 +42,7 @@ router.get('/users/:id', async (req, res) => {
 
 router.delete('/users/:id', async (req, res) => {
   const { id } = req.params;
-  const { password } = req.query; // <- CAMBIO: lo recibes desde query
+  const { password } = req.query; // 👈 usa query, no body
 
   try {
     const user = await User.findById(id);
@@ -51,16 +51,18 @@ router.delete('/users/:id', async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
-    await user.deleteOne();
+    await user.deleteOne(); // elimina el usuario
     await SesionEEG.deleteMany({ userId: id });
     await PerfilCalibracion.deleteMany({ usuarioId: id });
     await Attention.deleteMany({ userId: id });
 
-    res.json({ message: 'Usuario y datos eliminados correctamente' });
+    return res.json({ message: 'Usuario y datos eliminados correctamente' });
   } catch (err) {
+    console.error("❌ Error al eliminar:", err.message);
     res.status(500).json({ message: 'Error al eliminar usuario' });
   }
 });
+
 
 
   
