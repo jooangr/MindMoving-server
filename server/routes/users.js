@@ -8,7 +8,6 @@ const SesionEEG = require('../models/SesionEEG');
 const PerfilCalibracion = require('../models/PerfilCalibracion');
 
 
-
 // Ruta PATCH para actualizar usuario
 router.patch('/update-user/:id', actualizarUsuario);
 
