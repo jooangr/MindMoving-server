@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 
 const SesionEEG = require('../models/SesionEEG');
 const PerfilCalibracion = require('../models/PerfilCalibracion');
-const Attention = require('../models/Attention');
 
 
 
@@ -60,7 +59,6 @@ router.delete('/users/:id', async (req, res) => {
     await user.deleteOne();
     await SesionEEG.deleteMany({ userId: id });
     await PerfilCalibracion.deleteMany({ usuarioId: id });
-    await Attention.deleteMany({ userId: id });
 
     return res.status(200).json({ success: true, message: 'Usuario y datos eliminados correctamente' });
   } catch (err) {
