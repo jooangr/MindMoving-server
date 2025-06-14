@@ -26,26 +26,36 @@ const register = async (req, res) => {
     res.status(500).json({ message: 'Error en el registro' });
   }
 };
-
 const login = async (req, res) => {
-
-  console.log("🛠 Intento de login:", req.body);
+  console.log("🛠 Intento de login recibido:", req.body);
 
   try {
     const { identifier, password } = req.body;
 
+    // LOG antes de buscar
+    console.log("🔍 Buscando usuario con:", identifier);
+
     const user = await User.findOne({
-      $or: [{ email: identifier }, { username: identifier }]
+      $or: [
+        { email: new RegExp(`^${identifier}$`, 'i') },
+        { username: new RegExp(`^${identifier}$`, 'i') }
+      ]
     });
 
-    if (!user) return res.status(404).json({ message: 'No existe' });
+    // LOG después de buscar
+    if (!user) {
+      console.log("❌ Usuario no encontrado:", identifier);
+      return res.status(404).json({ message: 'No existe' });
+    }
+
+    console.log("👤 Usuario encontrado:", user.username);
 
     const valid = await bcrypt.compare(password, user.password);
 
-    // ⚠️ Si no es válido, intentamos con texto plano
+    // ⚠️ Si no es válido, intentamos con texto plano por si quedó sin hashear
     if (!valid) {
       if (user.password === password) {
-        // Re-hashear la contraseña antigua no segura
+        // Re-hashear la contraseña insegura
         const hashed = await bcrypt.hash(password, 10);
         user.password = hashed;
         await user.save();
@@ -54,17 +64,19 @@ const login = async (req, res) => {
         return res.json({ message: 'Login correcto (actualizado)', userId: user._id });
       }
 
+      console.log("🚫 Contraseña incorrecta para:", identifier);
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    console.log("🔐 Login recibido:", req.body);
-    res.json({ message: 'Login correcto', userId: user._id });
+    console.log("✅ Login correcto para:", identifier);
+    return res.json({ message: 'Login correcto', userId: user._id });
 
   } catch (err) {
-    console.error('❌ Error al hacer login:', err.message);
-    res.status(500).json({ message: 'Error en el login' });
+    console.error('💥 Error grave durante login:', err);
+    return res.status(500).json({ message: 'Error en el login', error: err.message });
   }
 };
+
 
 
 const actualizarUsuario = async (req, res) => {
