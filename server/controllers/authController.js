@@ -108,7 +108,7 @@ const actualizarUsuario = async (req, res) => {
     if (username) user.username = username;
     if (email) user.email = email;
     if (password) {
-      const bcrypt = require('bcryptjs');
+      const bcrypt = require('bcrypt');
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
     }
