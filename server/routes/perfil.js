@@ -11,4 +11,7 @@ router.post('/save', perfilController.saveOrUpdatePerfil); // ← cambio el endp
 // Crear perfil nuevo automático tras calibración
 router.post('/', perfilController.crearPerfil);
 
+router.patch('/:id/tipo', perfilController.actualizarTipo);
+
+
 module.exports = router;

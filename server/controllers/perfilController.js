@@ -63,5 +63,27 @@ const crearPerfil = async (req, res) => {
   }
 };
 
+const actualizarTipo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { tipo } = req.body;
+
+    const perfil = await PerfilCalibracion.findOne({ usuarioId: id });
+
+    if (!perfil) {
+      return res.status(404).json({ message: 'Perfil no encontrado' });
+    }
+
+    perfil.tipo = tipo;
+    await perfil.save();
+
+    res.status(200).json(perfil);
+  } catch (err) {
+    console.error("Error al actualizar tipo de perfil:", err);
+    res.status(500).json({ message: 'Error al actualizar tipo de perfil' });
+  }
+};
+
+
 // ✅ Exporta todos correctamente
-module.exports = { getPerfil, saveOrUpdatePerfil, crearPerfil };
+module.exports = { getPerfil, saveOrUpdatePerfil, crearPerfil, actualizarTipo };
