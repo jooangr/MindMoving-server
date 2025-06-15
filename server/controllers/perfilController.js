@@ -48,7 +48,10 @@ const saveOrUpdatePerfil = async (req, res) => {
 
 const crearPerfil = async (req, res) => {
 
-  console.log("Creando perfil de calirabcion")
+  console.log("Creando perfil de calibracion")
+  //Prueba de alterncia y blinking
+  console.log("BODY RECIBIDO:", req.body);
+
   try {
     const nuevoPerfil = new PerfilCalibracion(req.body);
     await nuevoPerfil.save();
