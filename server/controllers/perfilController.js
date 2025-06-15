@@ -1,6 +1,8 @@
 const PerfilCalibracion = require('../models/PerfilCalibracion');
 
 const getPerfil = async (req, res) => {
+
+  console.log('Obteniendo el Perfil de Calibracion ...')
   try {
     const { usuarioId } = req.params;
     const perfil = await PerfilCalibracion.findOne({ usuarioId });
@@ -16,6 +18,8 @@ const getPerfil = async (req, res) => {
 };
 
 const saveOrUpdatePerfil = async (req, res) => {
+
+  console.log('Actualizando  ...')
   try {
     const { usuarioId, tipo, valoresAtencion, valoresMeditacion, alternancia, blinking } = req.body;
 
@@ -64,6 +68,8 @@ const crearPerfil = async (req, res) => {
 };
 
 const actualizarTipo = async (req, res) => {
+
+  console.log('Actualizando Perfil de Calibracion del Usuario ...')
   try {
     const { id } = req.params;
     const { tipo } = req.body;
@@ -85,5 +91,5 @@ const actualizarTipo = async (req, res) => {
 };
 
 
-// ✅ Exporta todos correctamente
+// Exportamos todos correctamente
 module.exports = { getPerfil, saveOrUpdatePerfil, crearPerfil, actualizarTipo };

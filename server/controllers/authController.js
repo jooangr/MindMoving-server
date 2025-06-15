@@ -6,7 +6,7 @@ const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    console.log('📩 Registro recibido:', { username, email });
+    console.log(' Registro recibido:', { username, email });
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) return res.status(409).json({ message: 'Correo ya registrado' });
@@ -27,13 +27,13 @@ const register = async (req, res) => {
   }
 };
 const login = async (req, res) => {
-  console.log("🛠 Intento de login recibido:", req.body);
+  console.log(" Intento de login recibido:", req.body);
 
   try {
     const { identifier, password } = req.body;
 
     // LOG antes de buscar
-    console.log("🔍 Buscando usuario con:", identifier);
+    console.log(" Buscando usuario con:", identifier);
 
     const user = await User.findOne({
       $or: [
@@ -52,7 +52,7 @@ const login = async (req, res) => {
 
     const valid = await bcrypt.compare(password, user.password);
 
-    // ⚠️ Si no es válido, intentamos con texto plano por si quedó sin hashear
+    //  Si no es válido, intentamos con texto plano por si quedó sin hashear
     if (!valid) {
       if (user.password === password) {
         // Re-hashear la contraseña insegura
@@ -60,15 +60,15 @@ const login = async (req, res) => {
         user.password = hashed;
         await user.save();
 
-        console.log('🔐 Contraseña antigua corregida y hasheada');
+        console.log(' Contraseña antigua corregida y hasheada');
         return res.json({ message: 'Login correcto (actualizado)', userId: user._id });
       }
 
-      console.log("🚫 Contraseña incorrecta para:", identifier);
+      console.log(" Contraseña incorrecta para:", identifier);
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    console.log("✅ Login correcto para:", identifier);
+    console.log(" Login correcto para:", identifier);
     return res.json({ message: 'Login correcto', userId: user._id });
 
   } catch (err) {
@@ -89,7 +89,7 @@ const actualizarUsuario = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    // ✅ Verificar si el nuevo username o email ya están en uso por otro usuario
+    // Verifica si el nuevo username o email ya están en uso por otro usuario
     if (username && username !== user.username) {
       const existingUsername = await User.findOne({ username });
       if (existingUsername && existingUsername._id.toString() !== id) {
@@ -104,7 +104,7 @@ const actualizarUsuario = async (req, res) => {
       }
     }
 
-    // ✅ Actualizar los datos
+    // Actualiza los datos
     if (username) user.username = username;
     if (email) user.email = email;
     if (password) {

@@ -62,6 +62,7 @@ const guardarSesion = async (req, res) => {
 
 //  Obtener sesiones EEG por ID de usuario
 const obtenerSesionesUsuario = async (req, res) => {
+  console.log('Obteniendo Sesiones ...')
   try {
     const { usuarioId } = req.params;
 
