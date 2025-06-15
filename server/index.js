@@ -18,10 +18,10 @@ app.use(express.json());
 
 // Rutas agrupadas
 app.use('/api', authRoutes);
+app.use('/api/users', themeRoutes);
 app.use('/api', userRoutes);
 app.use('/api', sesionRoutes);
 app.use('/api/perfil', perfilRoutes);
-app.use('/users', themeRoutes);
 
 
 // Solo una llamada a listen
