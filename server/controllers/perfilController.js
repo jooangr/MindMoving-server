@@ -12,6 +12,7 @@ const getPerfil = async (req, res) => {
     }
 
     res.json(perfil);
+    console.log('Se ha guardado correctamente el perfil de calibracion')
   } catch (err) {
     res.status(500).json({ message: 'Error al obtener perfil' });
   }
@@ -84,6 +85,7 @@ const actualizarTipo = async (req, res) => {
     await perfil.save();
 
     res.status(200).json(perfil);
+    console.log('Actualizado correctamente')
   } catch (err) {
     console.error("Error al actualizar tipo de perfil:", err);
     res.status(500).json({ message: 'Error al actualizar tipo de perfil' });

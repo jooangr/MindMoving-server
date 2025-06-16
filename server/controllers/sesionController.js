@@ -52,7 +52,7 @@ const guardarSesion = async (req, res) => {
     await sesion.save();
 
     res.status(201).json({ message: 'Sesión guardada correctamente' });
-    console.log("Sesióm guardada correctamente :)")
+    console.log("Sesió guardada correctamente")
 
   } catch (err) {
     console.error('❌ Error al guardar sesión:', err);
@@ -73,6 +73,7 @@ const obtenerSesionesUsuario = async (req, res) => {
     const sesiones = await SesionEEG.find({ usuarioId });
 
     res.status(200).json(sesiones);
+    console.log('Sesiones obtenidas correctamente')
 
   } catch (err) {
     console.error('❌ Error al obtener sesiones:', err);

@@ -5,6 +5,7 @@ const PerfilCalibracion = require('../models/PerfilCalibracion');
 
 // PATCH /update-user/:id
 const actualizarUsuario = async (req, res) => {
+  console.log('Actializando datos de usuario')
   try {
     const { id } = req.params;
     const { username, email, password } = req.body;
@@ -18,6 +19,7 @@ const actualizarUsuario = async (req, res) => {
     );
 
     res.json({ message: 'Usuario actualizado', updatedUser });
+    console.log('Datos del usuario actualizados')
   } catch (err) {
     res.status(500).json({ message: 'Error al actualizar usuario' });
   }
@@ -25,6 +27,8 @@ const actualizarUsuario = async (req, res) => {
 
 // POST /verificar-password/:id
 const verificarPassword = async (req, res) => {
+
+  console.log('Verificando contraseña')
   const { id } = req.params;
   const { password } = req.body;
 
@@ -34,6 +38,8 @@ const verificarPassword = async (req, res) => {
 
     const valid = await bcrypt.compare(password, user.password);
     res.json({ success: valid });
+    console.log('Contraseña verificada')
+
   } catch (e) {
     res.status(500).json({ success: false, message: "Error al verificar contraseña" });
   }
