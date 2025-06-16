@@ -13,14 +13,16 @@ Backend desarrollado en **Node.js + Express** para la aplicación móvil **MindM
 
 ## Funcionalidades principales
 
-- Registro de usuarios: `POST /api/register`
-- Inicio de sesión: `POST /api/login`
-- Verificación de contraseña en login y edición: `POST /api/verify-password`, `POST /api/verificar-password/:id`
-- Actualización de datos del usuario: `PATCH /api/update-user/:id`
-- Obtener datos del usuario: `GET /api/users/:id`
-- Guardar sesiones EEG: `POST /api/sesiones`
-- Obtener sesiones de un usuario: `GET /api/sesiones/:userId`
-- Obtener perfil de calibración: `GET /api/perfil/:usuarioId`
+- Registro de usuarios\*\*: `POST /api/register`
+- Inicio de sesión\*\*: `POST /api/login`
+- Verificación de contraseña\*\*:
+  - `POST /api/verify-password`
+  - `POST /api/verificar-password/:id`
+- Actualizar datos del usuario\*\*: `PATCH /api/update-user/:id`
+- Obtener datos del usuario\*\*: `GET /api/users/:id`
+- Guardar sesiones EEG\*\*: `POST /api/sesiones`
+- Obtener sesiones de un usuario\*\*: `GET /api/sesiones/:userId`
+- Obtener perfil de calibración\*\*: `GET /api/perfil/:usuarioId`
 
 ## Configuración
 
@@ -53,23 +55,22 @@ npm start
 
 ```
 MindMoving-server/
-├── controllers/           # Lógica de cada endpoint
+├── controllers/           # Lógica de negocio
 │   ├── authController.js
 │   ├── userController.js
 │   ├── sesionController.js
-│   └── perfilController.js
-├── models/                # Esquemas Mongoose (User, Sesion, Perfil)
-├── routes/                # Rutas agrupadas por funcionalidad
-├── db.js                  # Conexión MongoDB
-├── index.js               # Entrada principal del servidor
-├── .env                   # Configuración con MONGO_URI
-├── .env.example
-```
+│   ├── perfilController.js
+    └── themeController.js
+├── models/                # Modelos Mongoose (User, Sesion, Perfil)
+├── routes/                # Endpoints organizados por funcionalidad
+├── db.js                  # Conexión a MongoDB
+├── index.js               # Punto de entrada principal
+├── .env                   # Variables de entorno
+├── .env.example           # Plantilla de entorno
 
 ## Despligue en la nube
 
 Este backend está desplegado en Render (https://mindmoving-api.onrender.com) y conectado a MongoDB Atlas. El cliente móvil consume los datos desde esta URL base.
 
-## Autor
-
-- Joan G. (jooangr)
+---
+```
